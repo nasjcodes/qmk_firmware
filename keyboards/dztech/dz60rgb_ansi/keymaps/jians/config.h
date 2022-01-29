@@ -1,0 +1,2 @@
+#define PERMISSIVE_HOLD
+#define TAPPING_TOGGLE 2
