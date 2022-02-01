@@ -1,0 +1,27 @@
+#define COMBO_COUNT 6
+#define COMBO_STRICT_TIMER
+// #define COMBO_TERM 20
+
+#ifdef RGB_DI_PIN
+/*== enabled animations ==*/
+// #    undef RGBLIGHT_EFFECT_BREATHING
+// #    undef RGBLIGHT_EFFECT_RAINBOW_MOOD
+// #    undef RGBLIGHT_EFFECT_RAINBOW_SWIRL
+// #    undef RGBLIGHT_EFFECT_SNAKE
+// #    undef RGBLIGHT_EFFECT_KNIGHT
+// #    undef RGBLIGHT_EFFECT_CHRISTMAS
+// #    undef RGBLIGHT_EFFECT_STATIC_GRADIENT
+// #    undef RGBLIGHT_EFFECT_RGB_TEST
+// #    undef RGBLIGHT_EFFECT_ALTERNATING
+// #    undef RGBLIGHT_EFFECT_TWINKLE
+// #    undef RGBLIGHT_DEFAULT_MODE
+// RGB Matrix
+#    ifdef RGB_MATRIX_ENABLE
+#        define RGB_MATRIX_STARTUP_HUE 128
+#        define RGB_MATRIX_STARTUP_SAT 255
+#        undef RGB_MATRIX_STARTUP_VAL
+#        define RGB_MATRIX_STARTUP_VAL 150
+#        define ENABLE_RGB_MATRIX_CYCLE_OUT_IN_DUAL
+#        define RGB_MATRIX_STARTUP_MODE RGB_MATRIX_SOLID_COLOR
+#    endif
+#endif
