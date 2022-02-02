@@ -17,11 +17,6 @@
 // #    undef RGBLIGHT_DEFAULT_MODE
 // RGB Matrix
 #    ifdef RGB_MATRIX_ENABLE
-#        define RGB_MATRIX_STARTUP_HUE 128
-#        define RGB_MATRIX_STARTUP_SAT 255
-#        undef RGB_MATRIX_STARTUP_VAL
-#        define RGB_MATRIX_STARTUP_VAL 150
 #        define ENABLE_RGB_MATRIX_CYCLE_OUT_IN_DUAL
-#        define RGB_MATRIX_STARTUP_MODE RGB_MATRIX_SOLID_COLOR
 #    endif
 #endif

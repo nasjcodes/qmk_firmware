@@ -253,7 +253,8 @@ uint8_t underglow_pri_indices [] = { 29, 31, 33, 63, 65, 67 };
 uint8_t underglow_sec_indices [] = { 28, 30, 32, 62, 64, 66 };
 
 void keyboard_post_init_user(void) {
-    rgb_matrix_set_color_all(HSV_PRIMARY);
+    rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
+    rgb_matrix_sethsv_noeeprom(HSV_PRIMARY);
 }
 
 layer_state_t default_layer_state_set_user(layer_state_t state) {
