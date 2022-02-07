@@ -20,8 +20,10 @@ void update_swapper(
             // Don't unregister cmdish until some other key is hit or released.
         }
     } else if (*active) {
-        unregister_code(cmdish);
-        *active = false;
+        if (!is_swapper_ignored_key(keycode)) {
+            unregister_code(cmdish);
+            *active = false;
+        }
     }
 }
 

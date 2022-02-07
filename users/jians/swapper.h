@@ -18,3 +18,6 @@ void update_swapper(
     uint16_t keycode,
     keyrecord_t *record
 );
+
+// keep swapper on for e.g shift
+bool is_swapper_ignored_key(uint16_t keycode);
