@@ -1,6 +1,6 @@
-VIA_ENABLE = yes
+# VIA_ENABLE = yes
 LTO_ENABLE = yes
 
-CONSOLE_ENABLE = no        # Console for debug
+CONSOLE_ENABLE = yes        # Console for debug
 NKRO_ENABLE = yes            # Enable N-Key Rollover
 COMBO_ENABLE = yes
