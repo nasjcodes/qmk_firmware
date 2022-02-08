@@ -1,7 +1,3 @@
-#define COMBO_COUNT 6
-#define COMBO_STRICT_TIMER
-#define COMBO_TERM 30
-
 #ifdef RGB_DI_PIN
 /*== enabled animations ==*/
 // #    undef RGBLIGHT_EFFECT_BREATHING
