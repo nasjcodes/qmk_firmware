@@ -38,7 +38,8 @@ enum keycodes {
     CUT,
     COPY,
     PASTE,
-    REDO
+    REDO,
+    SAVE
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -93,7 +94,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // ├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
         _______, _______, SW_WIN,  _______, _______, _______,                            KC_PGUP, KC_HOME, KC_UP,   KC_END,  KC_INS,  _______,
     // ├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-        _______, KC_LGUI, KC_LCTL, KC_LSFT, KC_LALT,  _______,                           KC_PGDN, KC_LEFT, KC_DOWN, KC_RIGHT,KC_PSCR, _______,
+        _______, KC_LGUI, KC_LCTL, KC_LSFT, KC_LALT,  SAVE,                              KC_PGDN, KC_LEFT, KC_DOWN, KC_RIGHT,KC_PSCR, _______,
     // ├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
         _______, UNDO,    CUT,     COPY,    PASTE,   REDO,    _______,          _______, _______, _______, _______, _______, _______, _______,
     // └────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
@@ -158,6 +159,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     )
 };
 
+// keep the thumb cluster "responsive" i.e cannot double tap to hold tap action
 bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case SPC_RSE:
@@ -166,6 +168,19 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
         case BSP_NUM:
             return true;
         default:
+            return false;
+    }
+}
+
+// keep the SECONDARY thumb cluster "responsive" i.e able to tap keys immediately without waiting for release
+bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case TAB_LWR:
+        case BSP_NUM:
+            // Immediately select the hold action when another key is pressed.
+            return true;
+        default:
+            // Do not select the hold action when another key is pressed.
             return false;
     }
 }
@@ -221,6 +236,7 @@ bool sw_win_active = false;
 bool is_swapper_ignored_key(uint16_t keycode) {
     switch (keycode) {
         case OS_SFT:
+        case KC_LSFT:
             return true;
         default:
             return false;
@@ -270,6 +286,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 register_code16(get_ctrl_or_cmd(KC_Y));
             } else {
                 unregister_code16(get_ctrl_or_cmd(KC_Y));
+            }
+            return false;
+        case SAVE:
+            if (record->event.pressed) {
+                register_code16(get_ctrl_or_cmd(KC_S));
+            } else {
+                unregister_code16(get_ctrl_or_cmd(KC_S));
             }
             return false;
     }
