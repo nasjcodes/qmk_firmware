@@ -46,7 +46,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_MAIN] = LAYOUT(
     // ┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
-        KC_LGUI,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                               KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    RESET,
+        KC_LGUI,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                               KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,
     // ├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
         KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                               KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSLS,
     // ├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
@@ -146,11 +146,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_MISC] = LAYOUT(
     // ┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
-        _______, _______, _______, _______, _______, _______,                            _______, _______, KC_F13,  KC_F14,  KC_F15,  _______,
+        _______, _______, _______, _______, RGB_VAD, RGB_VAI,                            _______, _______, KC_F13,  KC_F14,  KC_F15,  RESET,
     // ├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-        _______, _______, _______, _______, _______, _______,                            _______, _______, KC_F16,  KC_F17,  KC_F18,  _______,
+        _______, _______, _______, _______, RGB_SAD, RGB_SAI,                            _______, _______, KC_F16,  KC_F17,  KC_F18,  _______,
     // ├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-        _______, _______, _______, _______, _______, _______,                            _______, _______, KC_F19,  KC_F20,  KC_F21,  _______,
+        _______, _______, _______, _______, RGB_HUD, RGB_HUI,                            _______, _______, KC_F19,  KC_F20,  KC_F21,  _______,
     // ├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
         _______, _______, _______, _______, _______, _______, AG_NORM,          AG_SWAP, _______, _______, KC_MPRV, KC_MPLY, KC_MNXT, _______,
     // └────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
@@ -323,8 +323,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 /* RGB */
-#define HSV_PRIMARY     128, 255, 100 // Cyan
-#define HSV_SECONDARY     213, 255, 100 // Magenta
+#define HSV_PRIMARY     120, 191, 80 // Cyan
+#define HSV_SECONDARY     213, 255, 80 // Magenta
 
 // ESDF indices
 uint8_t esdf_indices [] = { 8, 14, 15, 16 };
@@ -346,9 +346,6 @@ layer_state_t default_layer_state_set_user(layer_state_t state) {
     switch (get_highest_layer(state)) {
         case _GAME:
             rgb_matrix_mode_noeeprom(RGB_MATRIX_CYCLE_OUT_IN_DUAL);
-            rgb_matrix_set_color_for_indices(esdf_indices, 4, HSV_SECONDARY);
-            // rgb_matrix_set_color_for_indices(underglow_pri_indices, 6, HSV_PRIMARY);
-            // rgb_matrix_set_color_for_indices(underglow_sec_indices, 6, HSV_SECONDARY);
             break;
         default: //  for any other layers, or the default layer
             rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
@@ -358,23 +355,9 @@ layer_state_t default_layer_state_set_user(layer_state_t state) {
     return state;
 }
 
+void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+}
+
 layer_state_t layer_state_set_user(layer_state_t state) {
-    // switch (get_highest_layer(state)) {
-    // case _RAISE:
-    //     rgblight_setrgb (0x00,  0x00, 0xFF);
-    //     break;
-    // case _LOWER:
-    //     rgblight_setrgb (0xFF,  0x00, 0x00);
-    //     break;
-    // case _PLOVER:
-    //     rgblight_setrgb (0x00,  0xFF, 0x00);
-    //     break;
-    // case _ADJUST:
-    //     rgblight_setrgb (0x7A,  0x00, 0xFF);
-    //     break;
-    // default: //  for any other layers, or the default layer
-    //     rgblight_setrgb (0x00,  0xFF, 0xFF);
-    //     break;
-    // }
   return update_tri_layer_state(state, _LOWER, _RAISE, _FUNC);
 }
