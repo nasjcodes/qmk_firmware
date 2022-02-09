@@ -20,7 +20,8 @@ typedef struct ONESHOT {
 // Custom oneshot mod implementation that doesn't rely on timers. If a mod is
 // used while it is held it will be unregistered on keyup as normal, otherwise
 // it will be queued and only released after the next non-mod keyup.
-void update_oneshot(
+// returns if oneshot was cancelled by cancel key
+bool update_oneshot(
     ONESHOT *ONESHOT,
     uint16_t keycode,
     keyrecord_t *record

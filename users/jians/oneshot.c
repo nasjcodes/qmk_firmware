@@ -1,6 +1,6 @@
 #include "oneshot.h"
 
-void update_oneshot(
+bool update_oneshot(
     ONESHOT *oneshot,
     uint16_t keycode,
     keyrecord_t *record
@@ -34,6 +34,8 @@ void update_oneshot(
                 // Cancel oneshot on designated cancel keydown.
                 oneshot->state = os_up_unqueued;
                 unregister_code(oneshot->mod);
+
+                return true;
             }
         } else {
             if (!is_oneshot_ignored_key(keycode)) {
@@ -52,4 +54,6 @@ void update_oneshot(
             }
         }
     }
+
+    return false;
 }

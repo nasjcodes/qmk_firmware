@@ -327,10 +327,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
 
     for (int i = 0; i < sizeof(osm_arr) / sizeof(*osm_arr); i++) {
-        update_oneshot(
+        bool cancelled = update_oneshot(
             &osm_arr[i],
             keycode, record
         );
+
+        if (cancelled) {
+            // don't trigger key if oneshot was cancelled
+            return false;
+        }
     }
 
     return true;
@@ -379,5 +384,4 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             rgb_matrix_set_color(osm_arr[i].led_index, rgb.r, rgb.g, rgb.b);
         }
     }
-
 }
