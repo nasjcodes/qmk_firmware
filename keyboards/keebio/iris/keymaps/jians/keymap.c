@@ -258,6 +258,7 @@ const ONESHOT cmd = {
 };
 
 ONESHOT osm_arr[] = { shft, ctrl, alt, cmd };
+int OSM_ARR_SIZE = 4;
 
 /* Swapper config */
 bool sw_win_active = false;
@@ -326,16 +327,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
     }
 
-    for (int i = 0; i < sizeof(osm_arr) / sizeof(*osm_arr); i++) {
-        bool cancelled = update_oneshot(
+    bool osm_cancelled = false;
+    for (int i = 0; i < OSM_ARR_SIZE; i++) {
+        bool canc = update_oneshot(
             &osm_arr[i],
             keycode, record
         );
 
-        if (cancelled) {
-            // don't trigger key if oneshot was cancelled
-            return false;
+        if (canc) {
+            osm_cancelled = canc;
         }
+    }
+
+    if (osm_cancelled) {
+        // don't trigger key if oneshot was cancelled
+        return false;
     }
 
     return true;
@@ -344,6 +350,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 /* RGB */
 #define HSV_PRIMARY     120, 191, 80 // Cyan
 #define HSV_SECONDARY     213, 255, 80 // Magenta
+#define HSV_HIGHLIGHT     237, 255, 160 // Magenta bright
 
 // ESDF indices
 uint8_t esdf_indices [] = { 8, 14, 15, 16 };
@@ -375,11 +382,10 @@ layer_state_t default_layer_state_set_user(layer_state_t state) {
 }
 
 void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
-    HSV hsv = { HSV_SECONDARY };
-
+    HSV hsv = { HSV_HIGHLIGHT };
     RGB rgb = hsv_to_rgb(hsv);
 
-    for (int i = 0; i < sizeof(osm_arr) / sizeof(*osm_arr); i++) {
+    for (int i = 0; i < OSM_ARR_SIZE; i++) {
         if (osm_arr[i].state == os_up_queued) {
             rgb_matrix_set_color(osm_arr[i].led_index, rgb.r, rgb.g, rgb.b);
         }
