@@ -41,15 +41,15 @@ bool update_oneshot(
             if (!is_oneshot_ignored_key(keycode)) {
                 // On non-ignored keyup, consider the oneshot used.
                 switch (oneshot->state) {
-                case os_down_unused:
-                    oneshot->state = os_down_used;
-                    break;
-                case os_up_queued:
-                    oneshot->state = os_up_unqueued;
-                    unregister_code(oneshot->mod);
-                    break;
-                default:
-                    break;
+                    case os_down_unused:
+                        oneshot->state = os_down_used;
+                        break;
+                    case os_up_queued:
+                        oneshot->state = os_up_unqueued;
+                        unregister_code(oneshot->mod);
+                        break;
+                    default:
+                        break;
                 }
             }
         }

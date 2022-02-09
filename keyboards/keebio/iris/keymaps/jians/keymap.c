@@ -327,6 +327,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
     }
 
+    update_swapper(
+        &sw_win_active, KC_LALT, KC_TAB, SW_WIN,
+        keycode, record
+    );
+
     bool osm_cancelled = false;
     for (int i = 0; i < OSM_ARR_SIZE; i++) {
         bool canc = update_oneshot(
