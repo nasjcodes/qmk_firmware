@@ -36,6 +36,8 @@ enum keycodes {
     OS_ALT,
     OS_GUI,
 
+    LAUNCH,
+
     UNDO,
     CUT,
     COPY,
@@ -68,7 +70,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // ├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
         _______, KC_LGUI, OS_CTL,  OS_SFT,  OS_ALT,  SAVE,                               KC_PGDN, KC_LEFT, KC_DOWN, KC_RIGHT,KC_PSCR, KC_DEL,
     // ├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-        _______, UNDO,    CUT,     COPY,    PASTE,   REDO,    _______,          _______, _______, _______, _______, _______, _______, _______,
+        _______, UNDO,    CUT,     COPY,    PASTE,   REDO,    _______,          _______, _______, LAUNCH,  _______, _______, _______, _______,
     // └────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
                                         _______, _______, _______,                   _______, KC_DEL,  _______
                                 //    └────────┴────────┴────────┘                 └────────┴────────┴────────┘
@@ -290,6 +292,14 @@ bool is_swapper_ignored_key(uint16_t keycode) {
     }
 }
 
+bool is_win_os(void) {
+    if (keymap_config.swap_lalt_lgui == 1 && keymap_config.swap_ralt_rgui == 1) {
+        return false;
+    }
+
+    return true;
+}
+
 uint16_t get_ctrl_or_cmd(uint8_t code) {
     if (keymap_config.swap_lalt_lgui == 1 && keymap_config.swap_ralt_rgui == 1) {
         return G(code);
@@ -340,6 +350,26 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 register_code16(get_ctrl_or_cmd(KC_S));
             } else {
                 unregister_code16(get_ctrl_or_cmd(KC_S));
+            }
+            return false;
+
+        case LAUNCH:
+            if (record->event.pressed) {
+                if (is_win_os()) {
+                    register_code(KC_LGUI);
+                    register_code(KC_GRV);
+                } else {
+                    register_code(KC_LGUI);
+                    register_code(KC_SPC);
+                }
+            } else {
+                if (is_win_os()) {
+                    unregister_code(KC_LGUI);
+                    unregister_code(KC_GRV);
+                } else {
+                    unregister_code(KC_LGUI);
+                    unregister_code(KC_SPC);
+                }
             }
             return false;
     }
