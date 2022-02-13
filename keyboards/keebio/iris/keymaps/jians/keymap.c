@@ -414,6 +414,8 @@ uint8_t underglow_r_indices [] = { 62, 63, 64, 65, 66, 67 };
 uint8_t underglow_pri_indices [] = { 29, 31, 33, 63, 65, 67 };
 // Underglow secondary
 uint8_t underglow_sec_indices [] = { 28, 30, 32, 62, 64, 66 };
+// outermost thumb keys
+uint8_t outer_thumb_indices [] = { 24, 58 };
 
 void keyboard_post_init_user(void) {
     rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
@@ -441,5 +443,9 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
         if (osm_arr[i].state != os_up_unqueued) {
             rgb_matrix_set_color(osm_arr[i].led_index, rgb.r, rgb.g, rgb.b);
         }
+    }
+
+    if (!is_win_os()) {
+        rgb_matrix_set_color_for_indices(outer_thumb_indices, 2, HSV_SECONDARY);
     }
 }
