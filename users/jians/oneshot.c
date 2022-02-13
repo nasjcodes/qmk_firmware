@@ -30,12 +30,26 @@ bool update_oneshot(
         }
     } else {
         if (record->event.pressed) {
-            if (is_oneshot_cancel_key(keycode) && oneshot->state != os_up_unqueued) {
-                // Cancel oneshot on designated cancel keydown.
-                oneshot->state = os_up_unqueued;
-                unregister_code(oneshot->mod);
+            if (is_oneshot_cancel_key(keycode)) {
 
-                return true;
+                switch (oneshot->state) {
+                    // ignored if oneshot is not queued or currently still holding
+                    case os_up_unqueued:
+                    case os_down_used:
+                        break;
+
+                    // consider used on keydown of cancel key
+                    case os_down_unused:
+                        oneshot->state = os_down_used;
+                        break;
+
+                    // Cancel oneshot on designated cancel keydown.
+                    default:
+                        oneshot->state = os_up_unqueued;
+                        unregister_code(oneshot->mod);
+                        return true;
+                        break;
+                }
             }
         } else {
             if (!is_oneshot_ignored_key(keycode)) {

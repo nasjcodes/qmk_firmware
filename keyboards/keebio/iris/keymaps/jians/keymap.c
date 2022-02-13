@@ -154,7 +154,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // ├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
         KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                                KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
     // ├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-        KC_LCTL, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_BSLS,          _______, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, OSL(_MISC),
+        KC_LCTL, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_QUOT,          _______, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, OSL(_MISC),
     // └────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
                              LM(_GAMEFN, MOD_LSFT), KC_LALT, KC_SPC,                    DF(_MAIN), BSP_NUM , KC_ENT
                                 //    └────────┴────────┴────────┘                 └────────┴────────┴────────┘
@@ -408,7 +408,7 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     RGB rgb = hsv_to_rgb(hsv);
 
     for (int i = 0; i < OSM_ARR_SIZE; i++) {
-        if (osm_arr[i].state == os_up_queued) {
+        if (osm_arr[i].state != os_up_unqueued) {
             rgb_matrix_set_color(osm_arr[i].led_index, rgb.r, rgb.g, rgb.b);
         }
     }
