@@ -221,10 +221,6 @@ bool get_ignore_mod_tap_interrupt(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
-layer_state_t layer_state_set_user(layer_state_t state) {
-  return update_tri_layer_state(state, _LOWER, _RAISE, _FUNC);
-}
-
 /* Oneshot config */
 bool is_oneshot_cancel_key(uint16_t keycode) {
     switch (keycode) {
@@ -422,13 +418,19 @@ void keyboard_post_init_user(void) {
     rgb_matrix_sethsv_noeeprom(HSV_PRIMARY);
 }
 
-layer_state_t default_layer_state_set_user(layer_state_t state) {
+layer_state_t layer_state_set_user(layer_state_t state) {
+    state = update_tri_layer_state(state, _LOWER, _RAISE, _FUNC);
     switch (get_highest_layer(state)) {
         case _GAME:
             rgb_matrix_mode_noeeprom(RGB_MATRIX_CYCLE_OUT_IN_DUAL);
             break;
+        case _MISC:
+            rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
+            rgb_matrix_sethsv_noeeprom(HSV_SECONDARY);
+            break;
         default: //  for any other layers, or the default layer
             rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
+            rgb_matrix_sethsv_noeeprom(HSV_PRIMARY);
             break;
     }
 
