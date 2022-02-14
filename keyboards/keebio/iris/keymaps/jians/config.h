@@ -1,3 +1,5 @@
+#define SPLIT_LAYER_STATE_ENABLE
+
 #ifdef RGB_DI_PIN
 /*== enabled animations ==*/
 // #    undef RGBLIGHT_EFFECT_BREATHING

@@ -402,14 +402,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 // ESDF indices
 uint8_t esdf_indices [] = { 8, 14, 15, 16 };
-// Left side underglow indices:
-uint8_t underglow_l_indices [] = { 28, 29, 30, 31, 32, 33 };
-// Right side underglow indices
-uint8_t underglow_r_indices [] = { 62, 63, 64, 65, 66, 67 };
-// Underglow primary
-uint8_t underglow_pri_indices [] = { 29, 31, 33, 63, 65, 67 };
-// Underglow secondary
-uint8_t underglow_sec_indices [] = { 28, 30, 32, 62, 64, 66 };
+// IJKL indices
+uint8_t ijkl_indices [] = { 42, 48, 49, 50 };
 // outermost thumb keys
 uint8_t outer_thumb_indices [] = { 24, 58 };
 
@@ -454,6 +448,14 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     HSV hsv = { HSV_HIGHLIGHT };
     RGB rgb = hsv_to_rgb(hsv);
+
+    switch(get_highest_layer(layer_state|default_layer_state)) {
+        case _LOWER:
+            rgb_matrix_set_color_for_indices(ijkl_indices, 4, HSV_SECONDARY);
+            break;
+        default:
+            break;
+    }
 
     for (int i = 0; i < OSM_ARR_SIZE; i++) {
         if (osm_arr[i].state != os_up_unqueued) {
