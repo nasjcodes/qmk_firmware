@@ -9,14 +9,15 @@
 extern keymap_config_t keymap_config;
 
 /* Layers */
+#define _COLEMAK 1
 #define _MAIN 0
-#define _GAME 1
-#define _GAMEFN 2
-#define _LOWER 3
-#define _RAISE 4
-#define _NUM 5
-#define _FUNC 6
-#define _MISC 7
+#define _GAME 2
+#define _GAMEFN 3
+#define _LOWER 4
+#define _RAISE 5
+#define _NUM 6
+#define _FUNC 7
+#define _MISC 8
 
 /* Aliases */
 // Layers
@@ -75,6 +76,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _________________QWERTY_L3_________________, DF(_GAME),    _______, _________________QWERTY_R3_________________,
                                    KC_LALT, KC_LSFT, SPC_LWR,      SPC_RSE, BSP_NUM, ENT_MISC
     ),
+
+    [_COLEMAK] = LAYOUT_base_wrapper(
+        ________________NUMBER_LEFT________________,                        ________________NUMBER_RIGHT_______________, KC_BSPC,
+        ______________COLEMAK_MOD_DH_L1____________,                        ______________COLEMAK_MOD_DH_R1____________, KC_DEL,
+        ______________COLEMAK_MOD_DH_L2____________,                        ______________COLEMAK_MOD_DH_R2____________,
+        ______________COLEMAK_MOD_DH_L3____________, DF(_GAME),    _______, ______________COLEMAK_MOD_DH_R3____________,
+                                   KC_LALT, KC_LSFT, SPC_LWR,      SPC_RSE, BSP_NUM, ENT_MISC
+  ),
 
     // // SHIFTED
     // [_GAME] = LAYOUT(
@@ -141,7 +150,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_MISC] = LAYOUT_wrapper(
         _______, _______, _______, _______, RGB_VAD, RGB_VAI,                       ___________________BLANK___________________, RESET,
-        _______, _______, _______, _______, RGB_SAD, RGB_SAI,                       _______, KC_F13,  KC_F14,  KC_F15,  KC_F16,  _______,
+        _______, _______, _______, _______, RGB_SAD, RGB_SAI,                       _______, KC_F13,  KC_F14,  KC_F15,  KC_F16,  DF(_COLEMAK),
         _______, _______, _______, _______, RGB_HUD, RGB_HUI,                       _______, KC_F17,  KC_F18,  KC_F19,  KC_F20,  _______,
         _______, _______, _______, _______, _______, _______, _______,     _______, _______, KC_MPRV, KC_MPLY, KC_MNXT, KC_F21,  _______,
                                          _______, _______, TO(_LOWER),     _______, _______, _______
@@ -363,6 +372,9 @@ layer_state_t default_layer_state_set_user(layer_state_t state) {
         case _GAME:
             rgb_matrix_mode_noeeprom(RGB_MATRIX_CYCLE_OUT_IN_DUAL);
             break;
+        case _COLEMAK:
+            rgb_matrix_mode_noeeprom(RGB_MATRIX_BREATHING);
+            break;
         default:  //  for any other layers, or the default layer
             rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
             rgb_matrix_sethsv_noeeprom(HSV_PRIMARY);
@@ -382,6 +394,9 @@ layer_state_t layer_state_set_user(layer_state_t state) {
         case _GAME:
         case _GAMEFN:
             rgb_matrix_mode_noeeprom(RGB_MATRIX_CYCLE_OUT_IN_DUAL);
+            break;
+        case _COLEMAK:
+            rgb_matrix_mode_noeeprom(RGB_MATRIX_BREATHING);
             break;
         default:  //  for any other layers, or the default layer
             rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
