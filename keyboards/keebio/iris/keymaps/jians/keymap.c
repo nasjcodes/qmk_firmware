@@ -9,8 +9,8 @@
 extern keymap_config_t keymap_config;
 
 /* Layers */
-#define _COLEMAK 1
-#define _MAIN 0
+#define _COLEMAK 0
+#define _QWERTY 1
 #define _GAME 2
 #define _GAMEFN 3
 #define _LOWER 4
@@ -69,21 +69,21 @@ enum keycodes {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-    [_MAIN] = LAYOUT_base_wrapper(
-        ________________NUMBER_LEFT________________,                        ________________NUMBER_RIGHT_______________, KC_BSPC,
-        _________________QWERTY_L1_________________,                        _________________QWERTY_R1_________________, KC_DEL,
-        _________________QWERTY_L2_________________,                        _________________QWERTY_R2_________________,
-        _________________QWERTY_L3_________________, DF(_GAME),    _______, _________________QWERTY_R3_________________,
-                                   KC_LALT, KC_LSFT, SPC_LWR,      SPC_RSE, BSP_NUM, ENT_MISC
-    ),
-
     [_COLEMAK] = LAYOUT_base_wrapper(
         ________________NUMBER_LEFT________________,                        ________________NUMBER_RIGHT_______________, KC_BSPC,
         ______________COLEMAK_MOD_DH_L1____________,                        ______________COLEMAK_MOD_DH_R1____________, KC_DEL,
         ______________COLEMAK_MOD_DH_L2____________,                        ______________COLEMAK_MOD_DH_R2____________,
-        ______________COLEMAK_MOD_DH_L3____________, DF(_GAME),    _______, ______________COLEMAK_MOD_DH_R3____________,
+        ______________COLEMAK_MOD_DH_L3____________, DF(_GAME),    AG_TOGG, ______________COLEMAK_MOD_DH_R3____________,
                                    KC_LALT, KC_LSFT, SPC_LWR,      SPC_RSE, BSP_NUM, ENT_MISC
-  ),
+    ),
+
+    [_QWERTY] = LAYOUT_base_wrapper(
+        ________________NUMBER_LEFT________________,                        ________________NUMBER_RIGHT_______________, KC_BSPC,
+        _________________QWERTY_L1_________________,                        _________________QWERTY_R1_________________, KC_DEL,
+        _________________QWERTY_L2_________________,                        _________________QWERTY_R2_________________,
+        _________________QWERTY_L3_________________, DF(_GAME),    AG_TOGG, _________________QWERTY_R3_________________,
+                                   KC_LALT, KC_LSFT, SPC_LWR,      SPC_RSE, BSP_NUM, ENT_MISC
+    ),
 
     // // SHIFTED
     // [_GAME] = LAYOUT(
@@ -96,23 +96,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
     //     KC_B,    KC_ESC,  KC_Z,    KC_X,    KC_C,    KC_V,    _______,          _______,  KC_N,    KC_M,   KC_COMM, KC_DOT,  KC_SLSH, _______,
     // //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
-    //                                 KC_TAB,  KC_LALT, KC_SPC,                  DF(_MAIN),  _______, _______
+    //                                 KC_TAB,  KC_LALT, KC_SPC,                  DF(_QWERTY),  _______, _______
     //                             // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
     // ),
 
     [_GAME] = LAYOUT_base_wrapper(
-        ________________NUMBER_LEFT________________,                        ________________NUMBER_RIGHT_______________, KC_MINS,
-        _________________QWERTY_L1_________________,                        _________________QWERTY_R1_________________, KC_BSLS,
-        _________________QWERTY_L2_________________,                        _________________QWERTY_R2_________________,
-        _________________QWERTY_L3_________________, KC_QUOT,    DF(_MAIN), _________________QWERTY_R3_________________,
+        ________________NUMBER_LEFT________________,                        ________________NUMBER_RIGHT_______________, KC_BSPC,
+        ______________COLEMAK_MOD_DH_L1____________,                        ______________COLEMAK_MOD_DH_R1____________, KC_BSLS,
+        ______________COLEMAK_MOD_DH_L2____________,                        ______________COLEMAK_MOD_DH_R2____________,
+        ______________COLEMAK_MOD_DH_L3____________, KC_QUOT,    DF(_COLEMAK),  ______________COLEMAK_MOD_DH_R3____________,
                      LM(_GAMEFN, MOD_LALT), KC_LSFT, KC_SPC,     SPC_RSE, KC_BSPC, ENT_MISC
     ),
 
     [_GAMEFN] = LAYOUT_wrapper(
-      DF(_MAIN), KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,                       ___________________BLANK___________________, _______,
-        _______, KC_P,    KC_O,    _______, KC_U,    KC_Y,                         ___________________BLANK___________________, _______,
-        _______, _______, _______, _______, _______, KC_H,                         ___________________BLANK___________________, _______,
-        _______, KC_SLSH, KC_DOT,  KC_COMM, KC_M,    KC_N,    _______,    _______, ___________________BLANK___________________, _______,
+    DF(_COLEMAK), KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,                       ___________________BLANK___________________, _______,
+        _______, ___________________BLANK___________________,                         ___________________BLANK___________________, _______,
+        _______, ___________________BLANK___________________,                         ___________________BLANK___________________, _______,
+        _______, ___________________BLANK___________________,    _______,    _______, ___________________BLANK___________________, _______,
                                             _______, _______, _______,    _______, _______, _______
     ),
 
@@ -150,7 +150,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_MISC] = LAYOUT_wrapper(
         _______, _______, _______, _______, RGB_VAD, RGB_VAI,                       ___________________BLANK___________________, RESET,
-        _______, _______, _______, _______, RGB_SAD, RGB_SAI,                       _______, KC_F13,  KC_F14,  KC_F15,  KC_F16,  DF(_COLEMAK),
+        _______, _______, _______, _______, RGB_SAD, RGB_SAI,                       _______, KC_F13,  KC_F14,  KC_F15,  KC_F16,  DF(_QWERTY),
         _______, _______, _______, _______, RGB_HUD, RGB_HUI,                       _______, KC_F17,  KC_F18,  KC_F19,  KC_F20,  _______,
         _______, _______, _______, _______, _______, _______, _______,     _______, _______, KC_MPRV, KC_MPLY, KC_MNXT, KC_F21,  _______,
                                          _______, _______, TO(_LOWER),     _______, _______, _______
@@ -372,8 +372,9 @@ layer_state_t default_layer_state_set_user(layer_state_t state) {
         case _GAME:
             rgb_matrix_mode_noeeprom(RGB_MATRIX_CYCLE_OUT_IN_DUAL);
             break;
-        case _COLEMAK:
+        case _QWERTY:
             rgb_matrix_mode_noeeprom(RGB_MATRIX_BREATHING);
+            rgb_matrix_sethsv_noeeprom(HSV_PRIMARY);
             break;
         default:  //  for any other layers, or the default layer
             rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
@@ -395,8 +396,9 @@ layer_state_t layer_state_set_user(layer_state_t state) {
         case _GAMEFN:
             rgb_matrix_mode_noeeprom(RGB_MATRIX_CYCLE_OUT_IN_DUAL);
             break;
-        case _COLEMAK:
+        case _QWERTY:
             rgb_matrix_mode_noeeprom(RGB_MATRIX_BREATHING);
+            rgb_matrix_sethsv_noeeprom(HSV_PRIMARY);
             break;
         default:  //  for any other layers, or the default layer
             rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
