@@ -26,6 +26,7 @@ extern keymap_config_t keymap_config;
 #define TAB_SFT MT(MOD_LSFT, KC_TAB)
 #define BSP_NUM LT(_NUM, KC_BSPC)
 #define ENT_MISC LT(_MISC, KC_ENT)
+#define BSP_LWR LT(_LOWER, KC_BSPC)
 
 #define ESC_SFT MT(MOD_LSFT, KC_ESC)
 
@@ -102,10 +103,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_GAME] = LAYOUT_base_wrapper(
         ________________NUMBER_LEFT________________,                        ________________NUMBER_RIGHT_______________, KC_BSPC,
-        ______________COLEMAK_MOD_DH_L1____________,                        ______________COLEMAK_MOD_DH_R1____________, KC_BSLS,
+        ______________COLEMAK_MOD_DH_L1____________,                        ______________COLEMAK_MOD_DH_R1____________, KC_DEL,
         ______________COLEMAK_MOD_DH_L2____________,                        ______________COLEMAK_MOD_DH_R2____________,
         ______________COLEMAK_MOD_DH_L3____________, KC_QUOT,    DF(_COLEMAK),  ______________COLEMAK_MOD_DH_R3____________,
-                     LM(_GAMEFN, MOD_LALT), KC_LSFT, KC_SPC,     SPC_RSE, KC_BSPC, ENT_MISC
+                     LM(_GAMEFN, MOD_LALT), KC_LSFT, KC_SPC,     SPC_RSE, BSP_LWR, ENT_MISC
     ),
 
     [_GAMEFN] = LAYOUT_wrapper(
@@ -166,6 +167,7 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
         case SPC_LWR:
         case TAB_SFT:
         case BSP_NUM:
+        case BSP_LWR:
             return true;
         default:
             return false;
@@ -181,6 +183,7 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
         case BSP_NUM:
         case SPC_LWR:
         case ENT_MISC:
+        case BSP_LWR:
             // Immediately select the hold action when another key is pressed.
             return true;
         default:
