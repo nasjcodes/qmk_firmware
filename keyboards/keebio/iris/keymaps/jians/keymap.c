@@ -18,6 +18,7 @@ extern keymap_config_t keymap_config;
 #define _NUM 6
 #define _FUNC 7
 #define _MISC 8
+#define _ALT 9
 
 /* Aliases */
 // Layers
@@ -27,6 +28,7 @@ extern keymap_config_t keymap_config;
 #define BSP_NUM LT(_NUM, KC_BSPC)
 #define ENT_MISC LT(_MISC, KC_ENT)
 #define BSP_LWR LT(_LOWER, KC_BSPC)
+#define ALT_ALT LM(_ALT, MOD_LALT)
 
 #define ESC_SFT MT(MOD_LSFT, KC_ESC)
 
@@ -63,7 +65,7 @@ enum keycodes {
      KC_LGUI,  N01,    N02,     N03,      N04,     N05,                           N06,     N07,     N08,     N09,     N0A,     N0B,         \
      KC_TAB,   K01,    K02,     K03,      K04,     K05,                           K06,     K07,     K08,     K09,     K0A,     K0B,         \
      KC_ESC,   K11,    K12,     K13,      K14,     K15,                           K16,     K17,     K18,     K19,     K1A,     K1B,         \
-     KC_LCTL,  K21,    K22,     K23,      K24,     K25,     K26,            K27,  K28,     K29,     K2A,     K2B,     K2C,     OSL(_MISC),   \
+     KC_LCTL,  K21,    K22,     K23,      K24,     K25,     K26,            K27,  K28,     K29,     K2A,     K2B,     K2C,     KC_MPLY,   \
                                           K31,     K32,     K33,            K34,  K35,     K36                                              \
   )
 #define LAYOUT_base_wrapper(...)       LAYOUT_iris_base(__VA_ARGS__)
@@ -75,7 +77,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         ______________COLEMAK_MOD_DH_L1____________,                        ______________COLEMAK_MOD_DH_R1____________, KC_DEL,
         ______________COLEMAK_MOD_DH_L2____________,                        ______________COLEMAK_MOD_DH_R2____________,
         ______________COLEMAK_MOD_DH_L3____________, DF(_GAME),    AG_TOGG, ______________COLEMAK_MOD_DH_R3____________,
-                                   KC_LALT, KC_LSFT, SPC_LWR,      SPC_RSE, BSP_NUM, ENT_MISC
+                                   ALT_ALT, KC_LSFT, SPC_LWR,      SPC_RSE, BSP_NUM, ENT_MISC
     ),
 
     [_QWERTY] = LAYOUT_base_wrapper(
@@ -83,7 +85,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _________________QWERTY_L1_________________,                        _________________QWERTY_R1_________________, KC_DEL,
         _________________QWERTY_L2_________________,                        _________________QWERTY_R2_________________,
         _________________QWERTY_L3_________________, DF(_GAME),    AG_TOGG, _________________QWERTY_R3_________________,
-                                   KC_LALT, KC_LSFT, SPC_LWR,      SPC_RSE, BSP_NUM, ENT_MISC
+                                   ALT_ALT, KC_LSFT, SPC_LWR,      SPC_RSE, BSP_NUM, ENT_MISC
     ),
 
     // // SHIFTED
@@ -112,7 +114,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_GAMEFN] = LAYOUT_wrapper(
     DF(_COLEMAK), KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,                       ___________________BLANK___________________, _______,
         _______, ___________________BLANK___________________,                         ___________________BLANK___________________, _______,
-        _______, ___________________BLANK___________________,                         ___________________BLANK___________________, _______,
+        KC_MPLY, ___________________BLANK___________________,                         ___________________BLANK___________________, _______,
         _______, ___________________BLANK___________________,    _______,    _______, ___________________BLANK___________________, _______,
                                             _______, _______, _______,    _______, _______, _______
     ),
@@ -155,6 +157,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, _______, _______, RGB_HUD, RGB_HUI,                       _______, KC_F17,  KC_F18,  KC_F19,  KC_F20,  _______,
         _______, _______, _______, _______, _______, _______, _______,     _______, _______, KC_MPRV, KC_MPLY, KC_MNXT, KC_F21,  _______,
                                          _______, _______, TO(_LOWER),     _______, _______, _______
+    ),
+
+    [_ALT] = LAYOUT_wrapper(
+    _______, ___________________BLANK___________________,                         ___________________BLANK___________________, _______,
+    _______, ___________________BLANK___________________,                         ___________________BLANK___________________, _______,
+    KC_MPLY, ___________________BLANK___________________,                         ___________________BLANK___________________, _______,
+    _______, ___________________BLANK___________________,    _______,    _______, ___________________BLANK___________________, _______,
+                                        _______, _______, _______,    _______, _______, _______
     )
 };
 // clang-format on
