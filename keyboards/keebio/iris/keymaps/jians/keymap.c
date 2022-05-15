@@ -27,7 +27,6 @@ extern keymap_config_t keymap_config;
 #define TAB_SFT MT(MOD_LSFT, KC_TAB)
 #define BSP_NUM LT(_NUM, KC_BSPC)
 #define ENT_MISC LT(_MISC, KC_ENT)
-#define BSP_LWR LT(_LOWER, KC_BSPC)
 #define ALT_ALT LM(_ALT, MOD_LALT)
 
 #define ESC_SFT MT(MOD_LSFT, KC_ESC)
@@ -108,7 +107,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         ______________COLEMAK_MOD_DH_L1____________,                        ______________COLEMAK_MOD_DH_R1____________, KC_DEL,
         ______________COLEMAK_MOD_DH_L2____________,                        ______________COLEMAK_MOD_DH_R2____________,
         ______________COLEMAK_MOD_DH_L3____________, KC_QUOT,    DF(_COLEMAK),  ______________COLEMAK_MOD_DH_R3____________,
-                     LM(_GAMEFN, MOD_LALT), KC_LSFT, KC_SPC,     SPC_RSE, BSP_LWR, ENT_MISC
+                     LM(_GAMEFN, MOD_LALT), KC_LSFT, KC_SPC,     SPC_RSE, BSP_NUM, ENT_MISC
     ),
 
     [_GAMEFN] = LAYOUT_wrapper(
@@ -137,10 +136,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_NUM] = LAYOUT_wrapper(
         _______, ___________________BLANK___________________,                       ___________________BLANK___________________, _______,
-        _______, ___________________BLANK___________________,                       ___________________BLANK___________________, _______,
-        _______, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                          KC_6,    KC_7,    KC_8,    KC_9,    KC_0,     _______,
-        _______, ___________________BLANK___________________, _______,     _______, _______, OS_ALT,  OS_SFT,  OS_CTL,  OS_GUI, _______,
-                                            _______, _______, _______,     _______, _______, _______
+        _______, _______, KC_7,    KC_8,    KC_9,    _______,                       KC_PGUP, KC_HOME, KC_UP,   KC_END,  KC_INS,  _______,
+        _______, _______, KC_4,    KC_5,    KC_6,    _______,                       KC_PGDN, KC_LEFT, KC_DOWN, KC_RIGHT,KC_PSCR, _______,
+        _______, _______, KC_1,    KC_2,    KC_3,    _______, _______,     _______, _______, OS_ALT,  OS_SFT,  OS_CTL,  OS_GUI,  _______,
+                                            _______, KC_0,    _______,     _______, _______, _______
     ),
 
     [_FUNC] = LAYOUT_wrapper(
@@ -177,7 +176,6 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
         case SPC_LWR:
         case TAB_SFT:
         case BSP_NUM:
-        case BSP_LWR:
             return true;
         default:
             return false;
@@ -193,7 +191,6 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
         case BSP_NUM:
         case SPC_LWR:
         case ENT_MISC:
-        case BSP_LWR:
             // Immediately select the hold action when another key is pressed.
             return true;
         default:
