@@ -4,5 +4,6 @@
 #include "wrappers.h"
 
 enum custom_keycodes {
-    STR_TV = QK_KB_0
+    STR_TV = QK_KB_0,
+    NEW_SAFE_RANGE
 };
