@@ -40,7 +40,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [2] = LAYOUT_wrapper(
         RGB_TOG, RGB_M_SW,RGB_M_TW,_______, _______, _______, ___________________BLANK___________________, KC_TRNS, KC_TRNS, KC_TRNS, QK_BOOT,
         KC_TRNS, RGB_VAD, RGB_VAI, _______, _______, _______, ___________________BLANK___________________, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-        KC_TRNS, ___________________BLANK___________________, ___________________BLANK___________________, KC_TRNS, KC_TRNS,          KC_TRNS,
+        KC_CAPS, ___________________BLANK___________________, ___________________BLANK___________________, KC_TRNS, KC_TRNS,          KC_TRNS,
         KC_TRNS, ___________________BLANK___________________, ___________________BLANK___________________, KC_TRNS,          KC_TRNS, KC_TRNS,
         KC_TRNS, KC_TRNS, KC_TRNS,                            KC_TRNS,                   KC_TRNS, KC_TRNS,          KC_TRNS, KC_TRNS, KC_TRNS
     ),
